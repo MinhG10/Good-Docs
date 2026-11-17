@@ -39,7 +39,11 @@ window.GoodDocsCloud = (() => {
         tokenExpiry = Date.now() + (Number(response.expires_in || 3600) - 60) * 1000;
         resolve(true);
       };
-      try { tokenClient.requestAccessToken({ prompt: accessToken ? '' : 'consent' }); }
+      try { 
+tokenClient.requestAccessToken({
+    prompt: ''
+});
+ }
       catch(err){reject(err);}
     });
   }
