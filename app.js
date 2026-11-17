@@ -11,12 +11,13 @@
   function sanitize(html){
     const doc=new DOMParser().parseFromString('<div>'+String(html||'')+'</div>','text/html');
     doc.querySelectorAll('script,style,iframe,object,embed,svg,math,form,link,meta,base').forEach(n=>n.remove());
-    doc.body.querySelectorAll('*').forEach(el=>{
-      for(const attr of [...el.attributes]){
-        const k=attr.name.toLowerCase(),v=attr.value.trim();
-        if(k.startsWith('on')||!['style','class'].includes(k)||k==='style' && (/url\s*\(|expression\s*\(|@import|behavior\s*:/i.test(v)))el.removeAttribute(attr.name);
-      }
-    });
+    doc.body.querySelectorAll('*').forEach(el => {
+    // Xóa thuộc tính CSS và HTML được dán từ bên ngoài.
+    // Tránh màu chữ đen, margin và width không phù hợp.
+    for (const attr of [...el.attributes]) {
+        el.removeAttribute(attr.name);
+    }
+});
     return doc.body.firstElementChild?.innerHTML || '';
   }
   function closeSidebar(){$('sidebar').classList.remove('open');}
